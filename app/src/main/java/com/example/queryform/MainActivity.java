@@ -66,8 +66,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                 } else {
                     View queryToastView = inflater.inflate(R.layout.custom_toast_layout, (ViewGroup) findViewById(R.id.customToast));
-                    // Handle the query submission logic here (e.g., send to a server)
-                    // For this example, we just show a toast message
+
                     // Set the toast messages
                     TextView toastm1 = queryToastView.findViewById(R.id.toastm1);
                     TextView toastm2 = queryToastView.findViewById(R.id.toastm2);
