@@ -2,6 +2,7 @@ package com.example.queryform;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.intellij.lang.annotations.Pattern;
+
+import java.util.regex.PatternSyntaxException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,8 +67,12 @@ public class MainActivity extends AppCompatActivity {
                 String email = editTextEmail.getText().toString();
                 String query = editTextQuery.getText().toString();
 
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(query)) {
-                    Toast.makeText(MainActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(name)) {
+                    editTextName.setError("Name is required");
+                } else if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                    editTextEmail.setError("Valid email is required");
+                } else if (TextUtils.isEmpty(query)) {
+                    editTextQuery.setError("Query is required");
                 } else {
                     View queryToastView = inflater.inflate(R.layout.custom_toast_layout, (ViewGroup) findViewById(R.id.customToast));
 
@@ -85,6 +94,9 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        // Not cancel alert-box outside click on alert-box
+        dialog.setCancelable(false);
 
         // Handle the Cancel button click
         buttonCancel.setOnClickListener(new View.OnClickListener() {
